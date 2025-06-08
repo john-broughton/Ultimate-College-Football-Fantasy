@@ -1,8 +1,54 @@
+import PlayerSummary from "../components/PlayerSummary";
+import { buildTestPlayers } from "../data/testDataBuilder";
+import { Link } from "react-router-dom";
+
+const testPlayers = buildTestPlayers();
+
 export default function HomePage() {
   return (
-    <div className="p-8 bg-gradient-to-r from-purple-400 to-pink-500 text-white text-center rounded-lg shadow-lg">
-      <h1 className="text-4xl font-bold mb-4">🏈 Ultimate College Football Fantasy</h1>
-      <p className="text-lg">Tailwind CSS is working if this is colorful 🎨</p>
+    <div>
+      <h1 className="text-3xl font-bold text-blue-800 mb-4">
+        🏆 Current Standings
+      </h1>
+
+      <div className="space-y-4">
+        {testPlayers
+          .sort((a, b) => b.score - a.score)
+          .map((player, index) => (
+            <Link
+              to={`/players/${player.name}`}
+              key={player.name}
+              className="block bg-white rounded-lg p-4 shadow-md border border-gray-200 hover:bg-blue-50 transition"
+            >
+              <PlayerSummary
+                name={`${index + 1}. ${player.name}`}
+                score={player.score}
+                balance={player.balance}
+              />
+            </Link>
+          ))}
+      </div>
+
+      <div className="mt-8 flex gap-4">
+        <a
+          href="/draft"
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        >
+          Go to Draft
+        </a>
+        <a
+          href="/roster"
+          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+        >
+          Set Roster
+        </a>
+        <a
+          href="/summary"
+          className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+        >
+          View Weekly Summary
+        </a>
+      </div>
     </div>
   );
 }
