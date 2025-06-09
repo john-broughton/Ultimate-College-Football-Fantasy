@@ -1,17 +1,13 @@
 import { useParams, useNavigate } from "react-router-dom";
-import {
-  buildTestPlayers,
-  buildTestTeams,
-  buildTestTransactions,
-} from "../data/testDataBuilder";
+import { buildFullTestData } from "../data/testDataBuilder";
 import CurrentTeamsTable from "../components/CurrentTeamsTable";
 import TransactionLogTable from "../components/TransactionLogTable";
 
 export default function PlayerOverviewPage() {
   const { playerName } = useParams();
   const navigate = useNavigate();
-  const allPlayers = buildTestPlayers();
-  const player = allPlayers.find((p) => p.name === playerName);
+  const { players, teams, roster, transactions  } = buildFullTestData();
+  const player = players.find((p) => p.name === playerName);
 
   const handleChange = (e) => {
     const selected = e.target.value;
@@ -32,7 +28,7 @@ export default function PlayerOverviewPage() {
           onChange={handleChange}
           className="border px-3 py-2 rounded text-sm"
         >
-          {allPlayers.map((p) => (
+          {players.map((p) => (
             <option key={p.name} value={p.name}>
               {p.name}
             </option>
@@ -58,14 +54,14 @@ export default function PlayerOverviewPage() {
 
       <section className="bg-white p-4 rounded shadow">
         <h2 className="text-xl font-semibold mb-2">Current Teams</h2>
-        <CurrentTeamsTable playerName={player.name} teams={buildTestTeams()} />
+        <CurrentTeamsTable playerName={player.name} teams={teams} />
       </section>
 
       <section className="bg-white p-4 rounded shadow">
         <h2 className="text-xl font-semibold mb-2">Transaction History</h2>
         <TransactionLogTable
           playerName={player.name}
-          transactions={buildTestTransactions()}
+          transactions={transactions}
         />
       </section>
     </div>
