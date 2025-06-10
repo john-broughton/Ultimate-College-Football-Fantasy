@@ -1,4 +1,4 @@
-import { BASE_POINTS, BONUS_POINTS } from "../models/scoringRules";
+import { BASE_POINTS, BONUS_POINTS } from "../models/scoringRules.js";
 
 export function calculateScoreBreakdownsForWeek(week, players, teams, roster) {
   const teamMap = Object.fromEntries(teams.map(t => [t.name, t]));

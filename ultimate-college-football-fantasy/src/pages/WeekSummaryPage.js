@@ -1,7 +1,7 @@
 import React from "react";
-import { buildFullTestData } from "../data/testDataBuilder";
-import { calculateScoreBreakdownsForWeek } from "../utils/scoreCalculator";
-import WeeklySummaryTable from "../components/weeklySummaryTable";
+import { buildFullTestData } from "../data/testDataBuilder.js";
+import { calculateScoreBreakdownsForWeek } from "../utils/scoreCalculator.js";
+import WeeklySummaryTable from "../components/weeklySummaryTable.js";
 
 export default function WeeklySummaryPage() {
   const { players, teams, roster } = buildFullTestData();

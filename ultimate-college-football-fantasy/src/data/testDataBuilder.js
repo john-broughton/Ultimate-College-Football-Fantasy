@@ -1,13 +1,11 @@
-import { Player } from "../models/playerModel";
-import { Team } from "../models/teamModel";
-import { TeamOwnership } from "../models/teamOwnershipModel";
-import { TransactionLogEntry } from "../models/transactionLogModel";
-import { Game } from "../models/gameModel";
-import { Roster } from "../models/rosterModel";
-import { Trade } from "../models/tradeModel";
-import {
-  calculatePlayerTotalScore,
-} from "../utils/scoreCalculator";
+import { Player } from "../models/playerModel.js";
+import { Team } from "../models/teamModel.js";
+import { TeamOwnership } from "../models/teamOwnershipModel.js";
+import { TransactionLogEntry } from "../models/transactionLogModel.js";
+import { Game } from "../models/gameModel.js";
+import { Roster } from "../models/rosterModel.js";
+import { Trade } from "../models/tradeModel.js";
+import {calculatePlayerTotalScore} from "../utils/scoreCalculator.js";
 
 export function buildTestPlayers() {
   const players = [

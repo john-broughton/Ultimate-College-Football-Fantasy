@@ -2,12 +2,12 @@ import { Analytics } from "@vercel/analytics/react"
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
-import HomePage from "./pages/HomePage";
-import DraftPage from "./pages/DraftPage";
-import RosterPage from "./pages/RosterPage";
-import WeekSummaryPage from "./pages/WeekSummaryPage";
-import TransactionsPage from "./pages/TransactionsPage";
-import PlayerOverviewPage from "./pages/PlayerOverviewPage";
+import HomePage from "./pages/HomePage.js";
+import DraftPage from "./pages/DraftPage.js";
+import RosterPage from "./pages/RosterPage.js";
+import WeekSummaryPage from "./pages/WeekSummaryPage.js";
+import TransactionsPage from "./pages/TransactionsPage.js";
+import PlayerOverviewPage from "./pages/PlayerOverviewPage.js";
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);

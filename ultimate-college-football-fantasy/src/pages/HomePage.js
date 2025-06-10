@@ -1,10 +1,17 @@
-import PlayerSummary from "../components/PlayerSummary";
-import { buildTestPlayers } from "../data/testDataBuilder";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
-const testPlayers = buildTestPlayers();
+import PlayerSummary from "../components/PlayerSummary.js";
+import { fetchAllPlayers } from "../services/backendApi.js";
 
 export default function HomePage() {
+  const [players, setPlayers] = useState([]);
+
+  useEffect(() => {
+    fetchAllPlayers()
+      .then(setPlayers)
+      .catch((err) => console.error("Failed to load players:", err));
+  }, []);
+
   return (
     <div>
       <h1 className="text-3xl font-bold text-blue-800 mb-4">
@@ -12,7 +19,7 @@ export default function HomePage() {
       </h1>
 
       <div className="space-y-4">
-        {testPlayers
+        {players
           .sort((a, b) => b.score - a.score)
           .map((player, index) => (
             <Link

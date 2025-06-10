@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { buildFullTestData } from "../data/testDataBuilder";
-import CurrentTeamsTable from "../components/CurrentTeamsTable";
-import TransactionLogTable from "../components/TransactionLogTable";
+import { buildFullTestData } from "../data/testDataBuilder.js";
+import CurrentTeamsTable from "../components/CurrentTeamsTable.js";
+import TransactionLogTable from "../components/TransactionLogTable.js";
 
 export default function PlayerOverviewPage() {
   const { playerName } = useParams();
