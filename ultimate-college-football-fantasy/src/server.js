@@ -14,6 +14,14 @@ import {
   addGame
 } from "./utils/db.js";
 
+import {
+  buildTestPlayers,
+  buildTestTeams,
+  buildTestTransactions,
+  buildTestTrades
+} from "./data/testDataBuilder.js";
+
+
 const app = express();
 const PORT = 3001;
 
@@ -57,6 +65,30 @@ app.post("/api/trades", (req, res) => {
 app.post("/api/games", (req, res) => {
   addGame(req.body);
   res.status(201).json({ success: true });
+});
+
+app.post("/api/seed", (req, res) => {
+  const existing = getAllPlayers();
+  if (existing.length > 0) {
+    return res.status(400).json({ message: "Already seeded" });
+  }
+
+  const players = buildTestPlayers();
+  const teams = buildTestTeams();
+  const transactions = buildTestTransactions();
+  const trades = buildTestTrades();
+
+  players.forEach(addPlayer);
+  teams.forEach(addTeam);
+  transactions.forEach(addTransaction);
+  trades.forEach(addTrade);
+
+  // Add all games
+  teams.forEach(team => {
+    team.games.forEach(addGame);
+  });
+
+  res.json({ message: "✅ Seed complete" });
 });
 
 app.listen(PORT, () => {

@@ -19,13 +19,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "seed": "node ./src/scripts/seed.js",
-    "start": "node src/server.js",
-    "start-server": "node ./src/server.js"
+  "start": "node src/server.js",
+  "start-server": "node ./src/server.js",
+  "seed": "node ./src/scripts/seed.js",
+  "build": "echo \"No build step needed for backend.\""
   },
   "eslintConfig": {
     "extends": [
