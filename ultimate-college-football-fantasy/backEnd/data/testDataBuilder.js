@@ -1,11 +1,12 @@
-import { Player } from "../models/playerModel.js";
-import { Team } from "../models/teamModel.js";
-import { TeamOwnership } from "../models/teamOwnershipModel.js";
-import { TransactionLogEntry } from "../models/transactionLogModel.js";
-import { Game } from "../models/gameModel.js";
-import { Roster } from "../models/rosterModel.js";
-import { Trade } from "../models/tradeModel.js";
-import {calculatePlayerTotalScore} from "../utils/scoreCalculator.js";
+import { Player } from "../../shared/models/playerModel.js";
+import { Team } from "../../shared/models/teamModel.js";
+import { TeamOwnership } from "../../shared/models/teamOwnershipModel.js";
+import { TransactionLogEntry } from "../../shared/models/transactionLogModel.js";
+import { Game } from "../../shared/models/gameModel.js";
+import { Roster } from "../../shared/models/rosterModel.js";
+import { Trade } from "../../shared/models/tradeModel.js";
+import { calculatePlayerTotalScore } from "../../shared/utils/scoreCalculator.js";
+import { addTeamOwnership } from "../utils/db.js";
 
 export function buildTestPlayers() {
   const players = [
@@ -52,11 +53,37 @@ export function buildTestTeams() {
     ["Notre Dame", "Charlie", 1],
     ["Alabama", "Fiona", 2],
     ["LSU", "Evan", 2],
+
+    ["Michigan", "Alice", 6],
+    ["Oregon", "Alice", 7],
+    ["Georgia", "Bob", 4],
+    ["USC", "Charlie", 3],
+    ["Notre Dame", "Bob", 5],
+    ["Texas", "Charlie", 6],
+    ["Florida State", "Dana", 7],
+    ["LSU", "Fiona", 8],
+    ["Alabama", "Dana", 5],
+    ["Ohio State", "Fiona", 9],
+
+    ["Michigan", "Charlie", 8],
+    ["Texas", "Fiona", 10],
+    ["Notre Dame", "Evan", 7],
+    ["USC", "Alice", 9],
+    ["Florida State", "Alice", 10],
   ];
 
   for (const [teamName, owner, week] of ownerships) {
     const team = teams.find((t) => t.name === teamName);
     team.addOwnership(new TeamOwnership({ teamName, ownerName: owner, acquiredWeek: week }));
+  }
+
+  for (const [teamName, ownerName, acquiredWeek] of ownerships) {
+    addTeamOwnership({
+      teamName,
+      ownerName,
+      acquiredWeek,
+      droppedWeek: null,
+    });
   }
 
   return teams;

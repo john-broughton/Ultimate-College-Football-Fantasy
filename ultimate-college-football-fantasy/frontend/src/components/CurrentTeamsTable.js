@@ -3,6 +3,7 @@ import { useState } from "react";
 export default function CurrentTeamsTable({ playerName, teams }) {
   const currentTeams = teams
     .filter((team) =>
+      Array.isArray(team.ownershipHistory) &&
       team.ownershipHistory.some(
         (o) => o.ownerName === playerName && o.droppedWeek === null
       )
@@ -15,7 +16,7 @@ export default function CurrentTeamsTable({ playerName, teams }) {
         name: team.name,
         conference: team.conference,
         cost: team.cost,
-        acquiredWeek: record.acquiredWeek,
+        acquiredWeek: record?.acquiredWeek ?? "N/A",
       };
     });
 

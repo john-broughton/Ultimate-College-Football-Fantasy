@@ -1,5 +1,5 @@
 import { buildTestPlayers, buildTestTeams, buildTestTransactions, buildTestTrades } from "../data/testDataBuilder.js";
-import { addPlayer, addTeam, addTransaction, addTrade } from "../utils/db.js";
+import { addPlayer, addTeam, addTransaction, addTrade } from "../../../backEnd/utils/db.js";
 
 function seedPlayers() {
   const players = buildTestPlayers();

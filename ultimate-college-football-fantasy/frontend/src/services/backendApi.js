@@ -90,3 +90,9 @@ export async function addGame(game) {
   if (!res.ok) throw new Error("Failed to add game");
   return await res.json();
 }
+
+export async function fetchTeamsWithOwnership() {
+  const res = await fetch(`${API_BASE}/teams/with-ownership`);
+  if (!res.ok) throw new Error("Failed to fetch team ownership data");
+  return await res.json();
+}

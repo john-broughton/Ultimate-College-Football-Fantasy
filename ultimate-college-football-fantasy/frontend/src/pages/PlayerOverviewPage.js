@@ -1,13 +1,39 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { buildFullTestData } from "../data/testDataBuilder.js";
+import { useEffect, useState } from "react";
 import CurrentTeamsTable from "../components/CurrentTeamsTable.js";
 import TransactionLogTable from "../components/TransactionLogTable.js";
+import {
+  fetchAllPlayers,
+  fetchAllTransactions,
+  fetchTeamsWithOwnership  
+} from "../services/backendApi.js";
 
 export default function PlayerOverviewPage() {
   const { playerName } = useParams();
   const navigate = useNavigate();
-  const { players, teams, roster, transactions  } = buildFullTestData();
-  const player = players.find((p) => p.name === playerName);
+
+  const [players, setPlayers] = useState([]);
+  const [teams, setTeams] = useState([]);
+  const [transactions, setTransactions] = useState([]);
+  const [player, setPlayer] = useState(null);
+
+  useEffect(() => {
+    async function loadData() {
+      const fetchedPlayers = await fetchAllPlayers();
+      const fetchedTeams = await fetchTeamsWithOwnership();
+      const fetchedTransactions = await fetchAllTransactions();
+   
+
+      setPlayers(fetchedPlayers);
+      setTeams(fetchedTeams);
+      setTransactions(fetchedTransactions);
+
+      const found = fetchedPlayers.find((p) => p.name === playerName);
+      setPlayer(found);
+    }
+
+    loadData();
+  }, [playerName]);
 
   const handleChange = (e) => {
     const selected = e.target.value;

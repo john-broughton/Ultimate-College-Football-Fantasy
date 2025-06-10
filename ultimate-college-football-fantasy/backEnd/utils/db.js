@@ -65,6 +65,17 @@ db.prepare(`
   )
 `).run();
 
+db.prepare(`
+  CREATE TABLE IF NOT EXISTS team_ownership (
+    teamName TEXT,
+    ownerName TEXT,
+    acquiredWeek INTEGER,
+    droppedWeek INTEGER,
+    acquiredCost INTEGER,
+    acquiredVia TEXT
+  )
+`).run();
+
 // Insert functions
 export function addPlayer({ name, email = "", paid = false, balance = 180 }) {
   db.prepare(`
@@ -146,4 +157,38 @@ export function getAllTrades() {
 
 export function getAllGames() {
   return db.prepare(`SELECT * FROM games ORDER BY week ASC`).all();
+}
+
+export function getAllTeamsWithOwnership() {
+  const teams = db.prepare(`SELECT * FROM teams`).all();
+  const ownerships = db.prepare(`SELECT * FROM team_ownership`).all();
+
+  const ownershipMap = {};
+  for (const o of ownerships) {
+    if (!ownershipMap[o.teamName]) {
+      ownershipMap[o.teamName] = [];
+    }
+    ownershipMap[o.teamName].push(o);
+  }
+
+  return teams.map((team) => ({
+    ...team,
+    ownershipHistory: ownershipMap[team.name] || []
+  }));
+}
+
+export function addTeamOwnership({
+  teamName,
+  ownerName,
+  acquiredWeek,
+  droppedWeek = null,
+  acquiredCost = 0,
+  acquiredVia = "Draft"
+}) {
+  const stmt = db.prepare(`
+    INSERT INTO team_ownership (
+      teamName, ownerName, acquiredWeek, droppedWeek, acquiredCost, acquiredVia
+    ) VALUES (?, ?, ?, ?, ?, ?)
+  `);
+  stmt.run(teamName, ownerName, acquiredWeek, droppedWeek, acquiredCost, acquiredVia);
 }

@@ -11,7 +11,8 @@ import {
   addTeam,
   addTransaction,
   addTrade,
-  addGame
+  addGame,
+  getAllTeamsWithOwnership 
 } from "./utils/db.js";
 
 import {
@@ -40,7 +41,7 @@ app.get("/api/teams", (req, res) => res.json(getAllTeams()));
 app.get("/api/transactions", (req, res) => res.json(getAllTransactions()));
 app.get("/api/trades", (req, res) => res.json(getAllTrades()));
 app.get("/api/games", (req, res) => res.json(getAllGames()));
-
+app.get("/api/teams/with-ownership", (req, res) => res.json(getAllTeamsWithOwnership()));
 // POST routes
 app.post("/api/players", (req, res) => {
   addPlayer(req.body);
