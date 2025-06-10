@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:3001/api";
+const API_BASE = "https://ucf-backend-akuv.onrender.com/api";
 
 // Players
 export async function fetchAllPlayers() {
